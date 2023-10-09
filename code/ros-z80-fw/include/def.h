@@ -116,4 +116,8 @@ typedef ERROR_PAK* ER_PAC_PTR;
     Nn.STAT = ER_UNDEF; \
     return Nn
 
+#define ER_PAK_JOIN(Nn, _pak) \
+	Nn = _pak; \
+    return Nn
+
 #endif

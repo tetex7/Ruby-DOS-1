@@ -16,9 +16,9 @@ ERROR_PAK ex_run()
         ER_PAK_INIT(d);
         ZROM_EX rom = pstack_pop(&roms_stack);
         d = (*rom)(out);
-        if ((d.STAT == ER_UNDEF) || (d.STAT == ER_SUCCESS))
+        if (!((d.STAT == ER_UNDEF) || (d.STAT == ER_SUCCESS)))
         {
-            return d;
+            ER_PAK_JOIN(out, d);
         }
     }
     ER_PAK_SUCCESS(out, 0);
