@@ -10,7 +10,7 @@ typedef ERROR_PAK (*ZROM_EX)(ERROR_PAK);
 extern ptr_stack_t roms_stack;
 
 //extern ZROM_EX* rom_ex;
-#define BASH_ZROM_SIZE 10
+//#define BASH_ZROM_SIZE 10
 //extern BYTE roms;
 
 ERROR_PAK ex_def(ZROM_EX fun);

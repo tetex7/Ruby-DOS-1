@@ -3,7 +3,7 @@
 #define VPTR_SIZE sizeof(VOID_PTR)
 void* _SUB_ = &__sub;
 
-void pstack_init(ptr_stack_t* stack)
+void  pstack_init(ptr_stack_t* stack)
 {
     stack->size = 1;
     stack->stack = malloc(VPTR_SIZE * 1);
@@ -34,6 +34,7 @@ ERROR_PAK pstack_push(ptr_stack_t* stack, VOID_PTR v)
         stack->size = arrlen(stack->stack);
         stack->stack_start = stack->stack;
         stack->stack_end = stack->stack - arrlen(stack->stack);
+        stack->stack[rlen(arrlen(stack->stack))] = v;
         ER_PAK_SUCCESS(out, 0);
     }
     else
@@ -62,7 +63,7 @@ void pstack_run(ptr_stack_t* stack)
     case true:
         for (size_t i = stack->size; i > 0; i--)
         {
-            void(*fun)()  = pstack_pop(stack);
+            void(*fun)() = pstack_pop(stack);
             (*fun)();
         } 
         return;
@@ -97,9 +98,18 @@ VOID_PTR pstack_pop(ptr_stack_t* stack)
     }
     else
     {
-        size_t nsize = stack->raw_size - VPTR_SIZE;
         VOID_PTR o = stack->stack_start[0];
+
+        size_t nsize = stack->raw_size - VPTR_SIZE;
+        VOID_PTR_ARR tmp_buff = malloc(nsize);
+
+        readonly VOID_PTR_ARR stpre = ++stack->stack_start;
+        memcpy(tmp_buff, stpre, tmp_buff);
+
         stack->stack = realloc(stack->stack, nsize);
+        memcpy(stack->stack, tmp_buff, arrlen(tmp_buff));
+
+        stack->size = arrlen(stack->stack);
         stack->stack_start = stack->stack;
         stack->stack_end = stack->stack - arrlen(stack->stack);
     }

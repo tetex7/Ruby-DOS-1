@@ -88,6 +88,10 @@ typedef struct ERROR_PAK_s
 	EWORD ECODE;
 } ERROR_PAK;
 
+typedef const char* CHAR_STR;
+
+typedef ERROR_PAK* ER_PAC_PTR;
+
 #define MK_ECODE(DOM_CODE, SUB_CODE) (DOM_CODE + SUB_CODE)
 #define ER_PAK_PLOAD {ER_UNDEF, 0}
 

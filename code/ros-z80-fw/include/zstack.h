@@ -4,14 +4,16 @@
 #include <errno.h>
 #define MAX_STACK_SIZE 200
 #define STACK_START_SIZE 1
-#define dd "def.h"
-#include dd
+#define DEFS "def.h"
+#include DEFS
 #include "sys_flags.h"
-
-
 
 typedef struct ptr_stack_s
 {
+    /**
+     * @brief the ptr the stack
+     * @author Tete
+    */
     VOID_PTR_ARR stack;
     VOID_PTR_ARR stack_start;
     VOID_PTR_ARR stack_end;
