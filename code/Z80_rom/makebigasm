@@ -1,0 +1,28 @@
+#!/bin/env bash
+
+if [[ -e "out.asm" ]]; then
+    rm "out.asm"
+fi
+
+touch out.asm
+for item in $@; do
+    if [ ! -e "$item" ]; then
+        echo "File \"$item\" not exists"
+        exit 1
+    fi
+
+    echo -e "\n; start of $item\n" >> out.asm
+    cat $item >> out.asm
+
+    echo -e "\n; end of $item\n" >> out.asm
+done
+
+cat >> out.asm <<_ACEOF
+
+; injeced code
+    if $ >= 484+512
+        .error "ram code to big"
+    endif
+; end injeced code
+
+_ACEOF
